@@ -1,0 +1,53 @@
+#include<stdio.h>
+
+struct process
+	{
+		int burst;
+		int arrival;
+	}p[5];
+
+int main()
+{   FILE *f;
+    f = fopen("Burst_file.txt", "r");
+
+    int num[5];    
+    int i;
+
+    for (i = 0; i < 5; i++)
+    {
+        fscanf(f, "%d", &num[i]);
+    }
+    printf("The number present in file are: ");
+    for (i = 0; i < 5; i++)
+    {
+       printf("%d ", num[i]);
+    }
+    
+int j,temp;
+for(i=0;i<4;i++)
+{
+	for(j=0;j<4-i;j++)
+	{
+		if(num[j]>num[j+1])
+			{
+				temp=num[j];
+				num[j]=num[j+1];
+				num[j+1]=temp;
+			}
+	}
+}
+	printf("\nSorted burst time is: ");
+	for(i=0;i<5;i++)
+	{p[i].arrival=0;
+	p[i].burst=num[i];
+	printf("%d ",p[i].burst);
+	}
+	int sum = 0;
+	int avg;
+	for (int j = 0; j<5; j++){
+	
+		sum = sum + p[i].burst;
+	}
+	avg = sum/5;
+	printf("\nAverage burst time is %d",avg);
+}
