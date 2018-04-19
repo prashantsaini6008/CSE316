@@ -1,0 +1,83 @@
+#include<stdio.h>
+#include<stdbool.h>
+
+struct availResc{
+  bool pen_stat;
+  bool paper_stat;
+  bool question_stat;
+};
+struct process{
+  bool pen_stat;
+  bool paper_stat;
+  bool question_stat;
+  bool status;
+};
+struct process p_Student[3];
+struct availResc a;
+
+
+bool alloc(int i){
+
+  if(p_Student[i].pen_stat && a.paper_stat && a.question_stat){
+  p_Student[i].status=true;
+  return true;
+  }
+
+  if(a.pen_stat && p_Student[i].paper_stat && a.question_stat){
+    p_Student[i].status=true;
+    return true;
+  }
+
+  if(a.pen_stat && a.paper_stat && p_Student[i].question_stat){
+    p_Student[i].status=true;
+    return true;
+  }
+  return false;
+}
+
+void allocateResource(){
+
+  printf("Enter 0 for allocating Pen and Paper\n");
+  printf("Enter 1 for allocating Paper and Question Paper\n");
+  printf("Enter 2 for allocating Puestion Paper and Pen\n");
+  int x;
+  scanf("%d",&x);
+  switch(x){
+  case 0:
+    a.paper_stat=true;
+    a.question_stat=true;
+  case 1:
+    a.question_stat=true;
+    a.pen_stat=true;
+  case 2:
+    a.pen_stat=true;
+    a.paper_stat=true;
+  }
+  
+}
+
+int main(){
+  int ch;
+  bool r;
+  p_Student[0].pen_stat=true;
+  p_Student[1].paper_stat=true;
+  p_Student[2].question_stat=true;
+  
+  for(int i=0;i<3;i++){
+    p_Student[i].status=false;
+  }
+  printf("Student 1 is having pen\n");
+  printf("Student 2 is having Paper\n");
+  printf("Student 3 is having Question Paper\n");
+  
+  for(int i=0;i<3;i++){
+  allocateResource();
+  for(int j=0;j<3;j++){
+    if(p_Student[j].status!=true){
+      if(r=alloc(j)){
+        printf("Process %d exited\n",j+1);
+      }
+    }
+  }
+ }
+}
